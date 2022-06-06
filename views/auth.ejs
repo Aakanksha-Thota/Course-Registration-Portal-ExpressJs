@@ -1,0 +1,42 @@
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('includes/navigation.ejs') %>
+    <main>
+        <% if(errorMessage){%>
+            <div class="error"><%=errorMessage%></div>
+        <%}%>
+        <form class="course-form" action="<% if(mode==='signUp'){ %>/signUp <%}else{%>/login <%}%>" method="POST">
+            <div class="form-control">
+                <label for="title">User Name</label>
+                <input type="text" name="userName" id="userName" value="<% if(errorMessage){ %><%= user.userName %><%}%>">
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="<% if(errorMessage){ %><%= user.password %><%}%>">
+            </div>
+            <% if(mode==='signUp'){ %>
+                <div class="form-control">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" name="confirmPassword" id="confirmPassword" value="<% if(errorMessage){ %><%= user.confirmPassword %><%}%>">
+                </div>
+            <%}%>
+
+            <button class="btn" type="submit">
+                <% if(mode==='signUp'){ %>
+                Sign Up
+                <% } else {%>
+                Login
+                <%}%>
+            </button>
+            <% if(mode!=='signUp'){ %>
+                <div style="margin:8px 0">
+                <a  href="/signUp"> Sign Up</a>
+            </div>
+            <%}%>
+
+        </form>
+    </main>
+<%- include('includes/end.ejs') %>

@@ -1,0 +1,64 @@
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="http://localhost:3000/css/courses.css">
+</head>
+
+<body>
+    <%- include('includes/navigation.ejs') %>
+    <main>
+        <% if(mode===""){ %>
+            <h2>Welcome to Course Management Portal</h1>
+        <%}%>
+        <% if(mode==="admin"){ %>
+            <div class="btn_container">
+                <a class="btn anchor__button" href="/admin/add-course"> Add Course </a>
+            </div>
+        <%}%>
+        <% if (courses.length > 0) { %>
+            <div class="grid">
+                <% for (let course of courses) { %>
+                    <article class="card course-item">
+                        <header class="card__header">
+                            <h1 class="course__title"><%= course.title %></h1>
+                        </header>
+                        <div class="card__content">
+                            <h2 class="course__author">By: <%= course.author %></h2>
+                            <p class="course__duration">Duration: <%= course.duration %></p>
+                            <p class="course__level">Level: <%= course.level %></p>
+                        </div>
+                        <div class="card__actions">
+                            <% if(mode==="admin"){ %>
+                                <div class="btn_container">
+                                    <a class="btn anchor__button" href="/admin/edit-course/<%=course._id%>"> Edit </a>
+                                    <form style="display:inline" action="/admin/delete-course" method="POST">
+                                        <input type="hidden" name="id" id="id" value="<%=course._id%>">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            <% }else if(mode==='enroll'){ %>
+                                <form  action="/unenroll" method="POST">
+                                    <input type="hidden" name="id" id="id" value="<%=course._id%>">
+                                    <button class="btn" type="submit">Unenroll</button>
+                                </form>
+                             <% } else if(mode==='courses'){ %>
+                                <form  action="/enroll" method="POST">
+                                    <input type="hidden" name="id" id="id" value="<%=course._id%>">
+                                    <button class="btn" type="submit">Enroll</button>
+                                </form>
+                            <%}%>
+
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <% if(mode==='enroll'){ %>
+                <h1>No Courses Enrolled!</h1>
+             <% } else if(mode==='courses'){ %>
+                <h1>All Courses Enrolled!</h1>
+            <% } else { %>  
+                <h1>No Courses Found!</h1>
+            <%}%>
+        <% } %>
+
+    </main>
+<%- include('includes/end.ejs') %>

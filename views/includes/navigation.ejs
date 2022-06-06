@@ -1,0 +1,45 @@
+<header class="main-header">
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <li class="main-header__item">
+        <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+      </li>
+      <%if(isLoggedIn){%>
+      <li class="main-header__item">
+        <a class="<%= path === '/courses' ? 'active' : '' %>" href="/courses"
+          >Courses</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/enrolled-courses' ? 'active' : '' %>"
+          href="/enrolled-courses"
+          >Enrolled Courses</a
+        >
+      </li>
+      <%if(role==='ADMIN'){%>
+      <li class="main-header__item">
+        <a class="<%= path === '/admin' ? 'active' : '' %>" href="/admin"
+          >Admin
+        </a>
+      </li>
+      <%}%> <%}%>
+    </ul>
+
+    <ul class="main-header__item-list">
+      <%if(!isLoggedIn){%>
+      <li class="main-header__item">
+        <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"
+          >Login</a
+        >
+      </li>
+      <%}else{%>
+      <li class="main-header__item">
+        <form action="/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
+      </li>
+      <%}%>
+    </ul>
+  </nav>
+</header>
